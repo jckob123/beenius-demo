@@ -1,0 +1,18 @@
+:root {
+    font-size: 16px;
+    font-family: "Open sans";
+    --text-primary: #F0544F;
+    --text-secondary: #ececec;
+    --nav-text-hover:#A84AD3;
+    --bg-primary: #1A1A23;
+    --bg-secondary: #23232F;
+    --user-card-bg: #F4F4FD;
+    --transition-speed: 600ms;
+}
+
+body {
+    color: black;
+    background-color:white;
+    padding: 0;
+    margin: 0;
+}
