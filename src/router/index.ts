@@ -1,18 +1,19 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import Users from "@/views/Users.vue";
+import Albums from "@/views/Albums.vue";
+
 
 const routes = [
   {
     path: "/users",
     name: "Users",
-    component: () =>
-      import(/* webpackChunkName: "users" */ "../views/Users.vue"),
+    component: Users
   },
   {
     path: "/albums/:id",
     name: "Albums",
-    component: () =>
-      import(/* webpackChunkName: "albums" */ "../views/Albums.vue"),
-  },
+    component: Albums
+  }
 ];
 
 const router = createRouter({

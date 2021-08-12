@@ -1,21 +1,27 @@
 <template>
-  <div class="users-container">
-    <div v-for="user in this.users" :key="user.id">
-      <router-link class="user-card-container" to="/albums">
-        <div class="avatar"><img src="@/assets/img/avatar.png" /></div>
-        <div class="user-data">
-          <p class="user-name">{{ user.name }}</p>
-          <p class="username">{{ user.username }}</p>
-          <div class="photo-container">
-            <img :src="user.randomPhotoUrl" />
+  <div>
+    <!--<loading-component :active="this.isLoading"></loading-component>-->
+    <div class="users-container">
+      <div v-for="user in this.users" :key="user.id">
+        <router-link class="user-card-container" :to="'/albums/' + user.id">
+          <div class="avatar">
+            <img src="@/assets/img/avatar.png" />
           </div>
-        </div>
-      </router-link>
+          <div class="user-data">
+            <p class="user-name">{{ user.name }}</p>
+            <p class="username">{{ user.username }}</p>
+            <div class="photo-container">
+              <img :src="user.randomPhotoUrl" />
+            </div>
+          </div>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+//import loadingComponent from "@/components/TheLoadingComponent.vue";
 import { defineComponent } from "vue";
 
 interface Geo {
@@ -48,6 +54,7 @@ interface User {
   };
   phone: string;
   website: string;
+  randomPhotoUrl: string;
   company: {
     [key: string]: Company;
   };
@@ -55,27 +62,35 @@ interface User {
 
 export default defineComponent({
   name: "Users",
-  components: {},
+  components: {
+   // loadingComponent,
+  },
   data() {
     return new (class {
       users: User[] = [];
+      isLoading: boolean = false;
     })();
   },
   methods: {
     getUsers(): void {
+      this.isLoading = true;
       fetch("https://jsonplaceholder.typicode.com/users")
         .then((response) => response.json())
         .then((response) => {
-          response.forEach(async (user) => {
+          response.forEach((user: User) => {
             this.getRandomPhotoFromAlbum(user.id).then((result) => {
-              user.randomPhotoUrl = result;
-              this.users.push(user);
+              var img = new Image();
+              img.src = result;
+              img.onload = () => {
+                user.randomPhotoUrl = img.src;
+                this.users.push(user);
+              };
             });
           });
+          this.isLoading = false;
         });
     },
-    async getRandomPhotoFromAlbum(userId: number) {
-      var result;
+    getRandomPhotoFromAlbum(userId: number) {
       var promise = fetch(
         `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
       )
@@ -91,14 +106,13 @@ export default defineComponent({
         .then((data) => {
           return data[this.getRandomInt(data.length)].url;
         });
-      result = await promise;
-      return result;
+      return promise;
     },
     getRandomInt(max: number) {
       return Math.floor(Math.random() * max);
     },
   },
-  mounted() {
+  created: function () {
     this.getUsers();
   },
 });
@@ -128,9 +142,6 @@ export default defineComponent({
   box-shadow: 0px 0px 21px -2px rgba(0, 0, 0, 0.1);
   transition: all 200ms ease;
   text-decoration: none;
-}
-
-.user-card-container:visited {
   color: inherit;
 }
 
