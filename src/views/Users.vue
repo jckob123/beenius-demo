@@ -1,28 +1,21 @@
 <template>
   <div>
-    <!--<loading-component :active="this.isLoading"></loading-component>-->
     <div class="users-container">
-      <div v-for="user in this.users" :key="user.id">
-        <router-link class="user-card-container" :to="'/albums/' + user.id">
-          <div class="avatar">
-            <img src="@/assets/img/avatar.png" />
-          </div>
-          <div class="user-data">
-            <p class="user-name">{{ user.name }}</p>
-            <p class="username">{{ user.username }}</p>
-            <div class="photo-container">
-              <img :src="user.randomPhotoUrl" />
-            </div>
-          </div>
-        </router-link>
-      </div>
+      <user-card
+        v-for="user in this.users"
+        :key="user.id"
+        :userId="user.id"
+        :userName="user.username"
+        :userFullName="user.name"
+        :randomPhotoUrl="user.randomPhotoUrl"
+      ></user-card>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-//import loadingComponent from "@/components/TheLoadingComponent.vue";
 import { defineComponent } from "vue";
+import UserCard from "@/components/UserCard.vue";
 
 interface Geo {
   lat: string;
@@ -63,7 +56,7 @@ interface User {
 export default defineComponent({
   name: "Users",
   components: {
-   // loadingComponent,
+    UserCard,
   },
   data() {
     return new (class {
@@ -129,55 +122,6 @@ export default defineComponent({
   height: 100%;
 }
 
-.user-card-container {
-  position: relative;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  width: 15rem;
-  margin: 6rem 1rem 1rem 1rem;
-  align-items: center;
-  padding: 8px;
-  -webkit-box-shadow: 0px 0px 21px -2px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 21px -2px rgba(0, 0, 0, 0.1);
-  transition: all 200ms ease;
-  text-decoration: none;
-  color: inherit;
-}
-
-.user-card-container:hover {
-  width: 15.5rem;
-  cursor: pointer;
-  font-size: 1.1rem;
-}
-
-.avatar {
-  width: 6rem;
-  height: 6rem;
-  position: absolute;
-  align-self: center;
-  top: -15%;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.avatar img {
-  width: 100%;
-}
-
-.user-data {
-  width: 100%;
-  margin-top: 2.5rem;
-}
-
-.photo-container img {
-  width: 100%;
-  height: 100%;
-}
-
-.user-data .user-name {
-  font-weight: bold;
-}
 @media only screen and (max-width: 600px) {
   .users-container {
     justify-content: center;
