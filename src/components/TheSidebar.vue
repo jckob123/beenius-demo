@@ -15,7 +15,7 @@
       </li>
       <li class="nav-item">
         <router-link to="/photos" class="nav-link">
-          <font-awesome-icon class="fa-primary" icon="user" size="1x" />
+          <font-awesome-icon class="fa-primary" icon="image" size="1x" />
           <span class="link-text">Photos</span></router-link
         >
       </li>
@@ -25,9 +25,9 @@
 
 <script lang="ts">
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUser, faImages } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faImages, faImage } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faUser, faImages);
+library.add(faUser, faImages, faImage);
 
 export default {
   name: "the-sidebar",
