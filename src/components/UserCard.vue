@@ -1,5 +1,8 @@
 <template>
-  <router-link class="user-card-container" :to="'/albums/' + userId">
+  <router-link
+    class="user-card-container"
+    :to="{ name: 'Albums', params: { id: userId } }"
+  >
     <div class="avatar">
       <img src="@/assets/img/avatar.png" />
     </div>
