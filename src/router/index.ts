@@ -1,8 +1,13 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Users from "@/views/Users.vue";
 import Albums from "@/views/Albums.vue";
+import Photos from "@/views/Photos.vue";
 
 const routes = [
+  {
+    path: "/",
+    redirect: "/users"
+  },
   {
     path: "/users",
     name: "Users",
@@ -20,10 +25,15 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/photos",
+    name: "Photos",
+    component: Photos,
+  },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 
