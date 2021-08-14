@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="users-container">
+    <div class="content-container">
       <user-card
         v-for="user in this.users"
         :key="user.id"
@@ -59,17 +59,18 @@ export default defineComponent({
     UserCard,
   },
   data() {
-    return new (class {
-      users: User[] = [];
-      isLoading: boolean = false;
-    })();
+    return {
+      users: [] as User[],
+    };
   },
   methods: {
     getUsers(): void {
-      this.isLoading = true;
       fetch("https://jsonplaceholder.typicode.com/users")
         .then((response) => response.json())
         .then((response) => {
+          /*api returns array, loop needed.
+          While at it insert into json random photo url
+          */
           response.forEach((user: User) => {
             this.getRandomPhotoFromAlbum(user.id).then((result) => {
               var img = new Image();
@@ -80,7 +81,6 @@ export default defineComponent({
               };
             });
           });
-          this.isLoading = false;
         });
     },
     getRandomPhotoFromAlbum(userId: number) {
@@ -89,15 +89,15 @@ export default defineComponent({
       )
         .then((res) => res.json())
         .then((res) => {
+          let random = this.getRandomInt(res.length);
           return fetch(
-            `https://jsonplaceholder.typicode.com/photos?albumId=${
-              res[this.getRandomInt(res.length)].id
-            }`
+            `https://jsonplaceholder.typicode.com/photos?albumId=${res[random].id}`
           );
         })
         .then((res) => res.json())
         .then((data) => {
-          return data[this.getRandomInt(data.length)].url;
+          let random = this.getRandomInt(data.length);
+          return data[random].url;
         });
       return promise;
     },
@@ -105,26 +105,10 @@ export default defineComponent({
       return Math.floor(Math.random() * max);
     },
   },
-  created: function () {
+  created() {
     this.getUsers();
   },
 });
 </script>
 
-<style>
-.users-container {
-  flex-direction: row;
-  justify-content: flex;
-  flex-grow: 2;
-  align-items: center;
-  flex-wrap: wrap;
-  display: flex;
-  height: 100%;
-}
-
-@media only screen and (max-width: 600px) {
-  .users-container {
-    justify-content: center;
-  }
-}
-</style>
+<style></style>
