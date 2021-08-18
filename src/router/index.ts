@@ -20,7 +20,7 @@ const routes = [
     children: [
       {
         path: ":id",
-        name: "Albums",
+        name: "Album",
         component: Albums,
       },
     ],
