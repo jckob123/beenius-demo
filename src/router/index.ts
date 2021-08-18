@@ -6,7 +6,7 @@ import Photos from "@/views/Photos.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/users"
+    redirect: "/users",
   },
   {
     path: "/users",
