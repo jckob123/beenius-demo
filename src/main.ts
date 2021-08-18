@@ -17,5 +17,4 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 require("./assets/global.css");
 
 //main mount
-
 app.mount("#app");
