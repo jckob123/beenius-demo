@@ -1,17 +1,22 @@
 <template>
-  <div class="album-card-container">
-    <div class="photos-container">
-      <img
-        v-for="photo in this.thumbnailPhotos()"
-        :key="photo.id"
-        :src="photo.thumbnailUrl"
-      />
-    </div>
+  <router-link
+    class="router-link"
+    :to="{ name: 'Photos', params: { albumId: albumId } }"
+  >
+    <div class="album-card-container">
+      <div class="photos-container">
+        <img
+          v-for="photo in this.thumbnailPhotos()"
+          :key="photo.id"
+          :src="photo.thumbnailUrl"
+        />
+      </div>
 
-    <div>
-      {{ albumTitle }}
+      <span>
+        {{ albumTitle }}
+      </span>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -21,6 +26,7 @@ export default defineComponent({
   name: "album-card",
   props: {
     albumTitle: String,
+    albumId: Number,
   },
   data: function () {
     return {};
@@ -50,6 +56,12 @@ export default defineComponent({
   text-decoration: none;
   color: inherit;
 }
+
+.router-link {
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
 .album-card-container:hover {
   width: 17rem;
   cursor: pointer;
