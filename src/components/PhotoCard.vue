@@ -127,7 +127,7 @@ export default defineComponent({
 
 .detail-view {
   position: relative;
-  padding:2px;
+  padding: 2px;
   top: 15%;
   color: black;
   background: rgba(255, 255, 255, 0.733);
@@ -151,7 +151,7 @@ export default defineComponent({
   .detail-view {
     width: max-content;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -168,8 +168,7 @@ export default defineComponent({
 
 @media only screen and (max-height: 1000px) {
   .detail-view {
-    top:0%;
+    top: 0%;
   }
 }
-
 </style>
