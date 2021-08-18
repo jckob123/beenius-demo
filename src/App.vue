@@ -1,8 +1,8 @@
 <template>
-  <the-sidebar></the-sidebar>
   <main>
     <router-view></router-view>
   </main>
+  <the-sidebar></the-sidebar>
 </template>
 
 <script>
