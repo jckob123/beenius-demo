@@ -139,7 +139,7 @@ export default defineComponent({
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s cubic-bezier(0.68, -0.65, 0.265, 1.3);
+  transition: opacity 0.5s cubic-bezier(0.68, -0.65, 0.265, 1.3);
 }
 
 .fade-enter-from,
