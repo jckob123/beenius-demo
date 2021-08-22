@@ -1,5 +1,6 @@
 <template>
   <main>
+    <the-breadcrumbs></the-breadcrumbs>
     <router-view></router-view>
   </main>
   <the-sidebar></the-sidebar>
@@ -7,11 +8,13 @@
 
 <script>
 import TheSidebar from "./components/TheSidebar.vue";
+import TheBreadcrumbs from "./components/TheBreadcrumbs.vue";
 
 export default {
   name: "App",
   components: {
     TheSidebar,
+    TheBreadcrumbs,
   },
 };
 </script>
