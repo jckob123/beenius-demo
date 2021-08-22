@@ -1,4 +1,7 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+} from "vue-router";
 import Users from "@/views/Users.vue";
 import Albums from "@/views/Albums.vue";
 import Photos from "@/views/Photos.vue";
@@ -6,7 +9,7 @@ import Photos from "@/views/Photos.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/users",
+    redirect: "/users"
   },
   {
     path: "/users",
@@ -14,19 +17,12 @@ const routes = [
     component: Users,
   },
   {
-    path: "/albums",
+    path: "/albums/:userId?",
     name: "Albums",
     component: Albums,
-    children: [
-      {
-        path: ":id",
-        name: "Album",
-        component: Albums,
-      },
-    ],
   },
   {
-    path: "/photos",
+    path: "/photos/:albumId?",
     name: "Photos",
     component: Photos,
   },
@@ -35,6 +31,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.fullPath == "/albums" || to.fullPath == "/photos") {
+    next("/users")
+  }
+  else {
+    next()
+  }
 });
 
 export default router;
