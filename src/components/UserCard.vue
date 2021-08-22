@@ -1,7 +1,7 @@
 <template>
   <router-link
     class="user-card-container"
-    :to="{ name: 'Albums', params: { id: userId } }"
+    :to="{ name: 'Albums', params: { userId: usersId } }"
   >
     <div class="avatar">
       <img src="@/assets/img/avatar.png" />
@@ -22,7 +22,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "user-card",
   props: {
-    userId: Number,
+    usersId: Number,
     userName: String,
     userFullName: String,
     randomPhotoUrl: String,
