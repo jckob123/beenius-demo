@@ -4,7 +4,7 @@
       <user-card
         v-for="user in this.users"
         :key="user.id"
-        :userId="user.id"
+        :usersId="user.id"
         :userName="user.username"
         :userFullName="user.name"
         :randomPhotoUrl="user.randomPhotoUrl"
