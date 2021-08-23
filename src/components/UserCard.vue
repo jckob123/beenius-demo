@@ -1,6 +1,7 @@
 <template>
   <router-link
     class="user-card-container"
+    @click="selectUser(usersId)"
     :to="{ name: 'Albums', params: { userId: usersId } }"
   >
     <div class="avatar">
@@ -10,7 +11,7 @@
       <p class="user-name">{{ userFullName }}</p>
       <p class="username">{{ userName }}</p>
       <div class="photo-container">
-        <img :src="randomPhotoUrl" />
+        <img id="random-photo" :src="randomPhotoUrl" />
       </div>
     </div>
   </router-link>
@@ -18,6 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { store } from "@/store";
 
 export default defineComponent({
   name: "user-card",
@@ -26,6 +28,17 @@ export default defineComponent({
     userName: String,
     userFullName: String,
     randomPhotoUrl: String,
+  },
+  methods: {
+    selectUser(value: string) {
+      this.store.selectedUser = value;
+      this.store.selectedAlbum = "";
+    },
+  },
+  data() {
+    return {
+      store: store,
+    };
   },
 });
 </script>

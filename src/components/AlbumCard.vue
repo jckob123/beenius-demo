@@ -1,7 +1,8 @@
 <template>
   <router-link
     class="router-link"
-    :to="{ name: 'Photos', params: { albumId: albumId } }"
+    @click="selectAlbum(albumsId)"
+    :to="{ name: 'Photos', params: { albumId: albumsId } }"
   >
     <div class="album-card-container">
       <div class="photos-container">
@@ -19,21 +20,27 @@
   </router-link>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
+import { store } from "@/store";
 
 export default defineComponent({
   name: "album-card",
   props: {
     albumTitle: String,
-    albumId: Number,
+    albumsId: Number,
   },
   data: function () {
-    return {};
+    return {
+      store: store,
+    };
   },
   methods: {
     thumbnailPhotos() {
       return this.$attrs.albumPhotos;
+    },
+    selectAlbum(value: string) {
+      this.store.selectedAlbum = value;
     },
   },
 });

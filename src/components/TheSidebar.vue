@@ -3,8 +3,29 @@
     <ul class="navbar-container">
       <li class="nav-item">
         <router-link :to="{ name: 'Users' }" class="nav-link">
-          <font-awesome-icon class="fa-primary" icon="home" size="1x" />
-          <span class="link-text">Home</span></router-link
+          <font-awesome-icon class="fa-primary" icon="user" size="1x" />
+          <span class="link-text">Users</span></router-link
+        >
+      </li>
+      <li v-if="this.store.selectedUser !== ''" class="nav-item">
+        <router-link
+          :to="{ name: 'Albums', params: { userId: this.store.selectedUser } }"
+          class="nav-link"
+        >
+          <font-awesome-icon class="fa-primary" icon="images" size="1x" />
+          <span class="link-text">Albums</span></router-link
+        >
+      </li>
+      <li v-if="this.store.selectedAlbum !== ''" class="nav-item">
+        <router-link
+          :to="{
+            name: 'Photos',
+            params: { albumId: this.store.selectedAlbum },
+          }"
+          class="nav-link"
+        >
+          <font-awesome-icon class="fa-primary" icon="image" size="1x" />
+          <span class="link-text">Photos</span></router-link
         >
       </li>
     </ul>
@@ -13,14 +34,17 @@
 
 <script lang="ts">
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faImages, faImage } from "@fortawesome/free-solid-svg-icons";
+import { store } from "@/store";
 
-library.add(faHome);
+library.add(faUser, faImages, faImage);
 
 export default {
   name: "the-sidebar",
   data: function () {
-    return {};
+    return {
+      store: store,
+    };
   },
 };
 </script>
