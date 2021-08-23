@@ -1,5 +1,5 @@
 <template>
-  <div class="content-container">
+  <div v-if="this.error == false" class="content-container">
     <photo-card
       v-for="photo in this.photos"
       :key="photo.id"
@@ -10,6 +10,7 @@
       :authorName="photo.authorName"
     ></photo-card>
   </div>
+  <div v-if="this.error == true" class="error">ERROR</div>
 </template>
 
 <script lang="ts">
@@ -34,6 +35,7 @@ export default defineComponent({
   data: function () {
     return {
       photos: [] as Photo[],
+      error: false as Boolean,
     };
   },
   methods: {
@@ -58,6 +60,9 @@ export default defineComponent({
               .then((data) => {
                 photo.authorName = data.name;
                 this.photos.push(photo);
+              })
+              .catch(() => {
+                this.error = true;
               });
           });
         });

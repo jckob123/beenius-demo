@@ -1,12 +1,15 @@
 <template>
-  <div class="content-container">
+  <div v-if="this.error == false" class="content-container">
     <album-card
       v-for="album in this.albums"
       :key="album.id"
       :albumTitle="album.title"
-      :albumId="album.id"
+      :albumsId="album.id"
       :albumPhotos="album.thumbnailPhotos.map((photo) => photo)"
     ></album-card>
+    <div v-if="this.error == true" class="error">
+      ERROR
+    </div>
   </div>
 </template>
 
@@ -37,6 +40,7 @@ export default defineComponent({
   data() {
     return {
       albums: [] as Album[],
+      error: false as Boolean,
     };
   },
   methods: {
@@ -56,7 +60,10 @@ export default defineComponent({
               this.albums.push(album);
             });
           });
-        });
+        })
+        .catch(() => {
+          this.error = true;
+        })
     },
     getRandomPhotos(albumId: number): Promise<Photo[]> {
       var promise = fetch(
@@ -67,7 +74,6 @@ export default defineComponent({
           const shuffled = this.shuffleArray(response);
           return shuffled.splice(0, 3);
         });
-
       return promise;
     },
     /*
@@ -82,7 +88,7 @@ export default defineComponent({
       return array;
     },
   },
-  created () {
+  created() {
     this.getAlbums();
   },
 });
