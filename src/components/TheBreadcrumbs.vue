@@ -3,12 +3,12 @@
     <ul class="breadcrumbs-list">
       <li
         class="breadcrumbs-item"
-        v-for="(breadcrumb, idx) in breadcrumbArray"
+        v-for="(crumb, idx) in $route.meta.crumbs"
         :key="idx"
       >
-        <router-link active-class="active" :to="breadcrumb.fullPath">
-          {{ breadcrumb.name }}
-        </router-link>
+        <router-link active-class="active" :to="crumb.link">
+          {{ crumb.name }}</router-link
+        >
       </li>
     </ul>
   </div>
@@ -16,29 +16,7 @@
 
 <script>
 export default {
-  name: "Breadcrumb",
-  data() {
-    return {
-      breadcrumbArray: [],
-    };
-  },
-  watch: {
-    $route() {
-      let route = this.$route;
-      this.breadcrumbArray.push(route);
-      if (route.name == "Users") {
-        this.breadcrumbArray.length = 0;
-        this.breadcrumbArray.push(route);
-      }
-      if (route.name == "Albums") {
-        if (this.breadcrumbArray.length == 0) {
-          this.breadcrumbArray.push(route);
-        } else {
-          this.breadcrumbArray.length = 2;
-        }
-      }
-    },
-  },
+  name: "the-breadcrumbs",
 };
 </script>
 
