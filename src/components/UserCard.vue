@@ -4,12 +4,10 @@
     @click="selectUser(usersId)"
     :to="{ name: 'Albums', params: { userId: usersId } }"
   >
-    <div class="avatar">
-      <img src="@/assets/img/avatar.png" />
-    </div>
     <div class="user-data">
       <p class="user-name">{{ userFullName }}</p>
       <p class="username">{{ userName }}</p>
+      <p>{{ companyName }}</p>
       <div class="photo-container">
         <img id="random-photo" :src="randomPhotoUrl" />
       </div>
@@ -28,6 +26,7 @@ export default defineComponent({
     userName: String,
     userFullName: String,
     randomPhotoUrl: String,
+    companyName: String
   },
   methods: {
     selectUser(value: string) {
@@ -55,9 +54,10 @@ export default defineComponent({
   padding: 8px;
   -webkit-box-shadow: 0px 0px 21px -2px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 21px -2px rgba(0, 0, 0, 0.1);
-  transition: all 200ms ease;
+  transition: all 100ms ease;
   text-decoration: none;
   color: inherit;
+  border-radius: 0.5rem;
 }
 
 .user-card-container:hover {

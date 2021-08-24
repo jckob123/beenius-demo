@@ -80,7 +80,7 @@ export default {
 .router-link-active {
   filter: grayscale(0%) opacity(1);
   background-color: var(--bg-secondary);
-  color: var(--nav-text-hover);
+  color: var(--nav-text-active);
 }
 
 .nav-link svg {

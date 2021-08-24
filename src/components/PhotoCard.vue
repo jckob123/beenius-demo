@@ -65,11 +65,11 @@ export default defineComponent({
   width: 20rem;
   height: 20rem;
   gap: 3rem;
-  /*margin: 6rem 1rem 1rem 1rem;*/
   align-items: center;
   transition: all 200ms ease;
   text-decoration: none;
   color: inherit;
+  border-radius: 0.5rem;
 }
 
 .photo-card-container img {
@@ -149,7 +149,7 @@ export default defineComponent({
 
 @media only screen and (min-width: 600px) {
   .detail-view {
-    width: max-content;
+    width: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
   }

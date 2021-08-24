@@ -44,6 +44,7 @@ export default defineComponent({
     },
   },
 });
+
 </script>
 
 <style>
@@ -62,6 +63,7 @@ export default defineComponent({
   transition: all 200ms ease;
   text-decoration: none;
   color: inherit;
+  border-radius: 0.5rem;
 }
 
 .router-link {
@@ -72,7 +74,7 @@ export default defineComponent({
 .album-card-container:hover {
   width: 17rem;
   cursor: pointer;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .photos-container {
