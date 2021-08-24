@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.error == false" class="content-container">
+  <div v-if="this.isError == false" class="content-container">
     <photo-card
       v-for="photo in this.photos"
       :key="photo.id"
@@ -10,12 +10,13 @@
       :authorName="photo.authorName"
     ></photo-card>
   </div>
-  <div v-if="this.error == true" class="error">ERROR</div>
+  <the-error-message :showError="this.isError"></the-error-message>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import PhotoCard from "@/components/PhotoCard.vue";
+import TheErrorMessage from "@/components/TheErrorMessage.vue";
 
 interface Photo {
   id: number;
@@ -31,11 +32,12 @@ export default defineComponent({
   name: "photos",
   components: {
     PhotoCard,
+    TheErrorMessage,
   },
   data: function () {
     return {
       photos: [] as Photo[],
-      error: false as Boolean,
+      isError: false as Boolean,
     };
   },
   methods: {

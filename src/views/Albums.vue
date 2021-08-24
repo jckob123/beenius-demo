@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.error == false" class="content-container">
+  <div v-if="this.isError == false" class="content-container">
     <album-card
       v-for="album in this.albums"
       :key="album.id"
@@ -7,10 +7,8 @@
       :albumsId="album.id"
       :albumPhotos="album.thumbnailPhotos.map((photo) => photo)"
     ></album-card>
-    <div v-if="this.error == true" class="error">
-      ERROR
-    </div>
   </div>
+  <the-error-message :showError="this.isError"></the-error-message>
 </template>
 
 <script lang="ts">
@@ -40,7 +38,7 @@ export default defineComponent({
   data() {
     return {
       albums: [] as Album[],
-      error: false as Boolean,
+      isError: false as Boolean,
     };
   },
   methods: {

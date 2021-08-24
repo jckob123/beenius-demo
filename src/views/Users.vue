@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="content-container">
+    <div v-if="this.isError == false" class="content-container" >
       <user-card
         v-for="user in this.users"
         :key="user.id"
@@ -8,9 +8,11 @@
         :userName="user.username"
         :userFullName="user.name"
         :randomPhotoUrl="user.randomPhotoUrl"
+        :companyName="user.company.name"
       ></user-card>
     </div>
   </div>
+  <the-error-message :showError="this.isError"></the-error-message>
 </template>
 
 <script lang="ts">
@@ -61,6 +63,7 @@ export default defineComponent({
   data() {
     return {
       users: [] as User[],
+      isError: false as Boolean,
     };
   },
   methods: {
@@ -69,7 +72,7 @@ export default defineComponent({
         .then((response) => response.json())
         .then((response) => {
           /*api returns array, loop needed.
-          While at it insert into json random photo url
+          Insert into json random photo url
           */
           response.forEach((user: User) => {
             this.getRandomPhotoFromAlbum(user.id).then((result) => {
@@ -88,10 +91,10 @@ export default defineComponent({
         `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
       )
         .then((res) => res.json())
-        .then((res) => {
-          let random = this.getRandomInt(res.length);
+        .then((data) => {
+          let random = this.getRandomInt(data.length);
           return fetch(
-            `https://jsonplaceholder.typicode.com/photos?albumId=${res[random].id}`
+            `https://jsonplaceholder.typicode.com/photos?albumId=${data[random].id}`
           );
         })
         .then((res) => res.json())
