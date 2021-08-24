@@ -8,33 +8,39 @@ function isEmptyObject(obj: {}) {
   return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-function setBreadCrumbs(to: any) {
-  to.meta.crumbs.forEach((element: any) => {
-    if (element.name == "Albums") {
-      if (store.selectedUser == "" && to.params.albumId !== undefined) {
-        fetch(
-          "https://jsonplaceholder.typicode.com/albums/" + to.params.albumId
-        )
-          .then((response) => response.json())
-          .then((data: any) => {
-            store.selectedUser = data.userId;
-            console.log(data.userId);
-          });
+function handleEmptyParams(to: any, next: any) {
+  if (isEmptyObject(to.params) === true && to.name != "Users") {
+    //redirect to /users
+    next("/users");
+  }
+}
+
+function fetchUserData(albumId: any) {
+  const promise = fetch(
+    `https://jsonplaceholder.typicode.com/albums/${albumId}`
+  )
+    .then((response: any) => response.json())
+    .then((data: any) => { return data });
+  return promise;
+}
+
+async function setBreadCrumbs(to: any) {
+  for (const crumb of to.meta.crumbs) {
+    if (crumb.name == "Albums") {
+      if (to.params.albumId !== undefined) {
+        var album = await fetchUserData(to.params.albumId);
+        crumb.link = '/albums/' + album.userId;
       }
-      element.link =
-        /albums/ +
-        (store.selectedUser !== "" ? store.selectedUser : to.params.userId);
-    } else if (element.name == "Photos") {
-      element.link =
-        /photos/ +
-        (store.selectedAlbum !== "" ? store.selectedAlbum : to.params.albumId);
+    } else if (crumb.name == "Photos") {
+      crumb.link = to.params.albumId;
     }
-  });
+
+  }
 }
 
 function handleRoute(to: any, from: any, next: any) {
   //user refreshed, or on entry
-  if (from.name === undefined) {
+  if (from.name == undefined) {
     //params are not empty
     if (isEmptyObject(to.params) === false) {
       //if on album set selected user to param
@@ -43,21 +49,18 @@ function handleRoute(to: any, from: any, next: any) {
       }
       //if on photos, set selected album to param and fetch underlying user
       if (to.name == "Photos") {
-        if (store.selectedUser === "") {
+        if (store.selectedUser == "") {
           fetch(
             "https://jsonplaceholder.typicode.com/albums/" + to.params.albumId
           )
             .then((response) => response.json())
             .then((data: any) => {
               store.selectedUser = data.userId;
+              store.selectedAlbum = to.params.albumId;
             });
         }
-        store.selectedAlbum = to.params.albumId;
       }
       //if params are empty and entry route is not users
-    } else if (isEmptyObject(to.params) === true && to.name !== "Users") {
-      //redirect to /users
-      next("/users");
     }
     //render
     next();
@@ -86,7 +89,7 @@ const routes = [
     meta: {
       crumbs: [
         { name: "Users", link: "/users" },
-        { name: "Albums", link: "/albums/" },
+        { name: "Albums", link: "" },
       ],
     },
   },
@@ -97,8 +100,8 @@ const routes = [
     meta: {
       crumbs: [
         { name: "Users", link: "/users" },
-        { name: "Albums", link: "/albums/" },
-        { name: "Photos", link: "/photos/" },
+        { name: "Albums", link: "" },
+        { name: "Photos", link: "" },
       ],
     },
   },
@@ -109,8 +112,9 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to: any, from: any, next) => {
-  setBreadCrumbs(to);
+router.beforeEach(async (to: any, from: any, next) => {
+  handleEmptyParams(to, next);
+  await setBreadCrumbs(to);
   handleRoute(to, from, next);
 });
 
