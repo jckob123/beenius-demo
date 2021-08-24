@@ -45,27 +45,39 @@ export default defineComponent({
       let albumId = this.$route.params.albumId;
       fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
         .then((response) => response.json())
-        .then((response: Photo[]) => {
-          response.forEach((photo: Photo) => {
-            fetch(
-              `https://jsonplaceholder.typicode.com/albums/${photo.albumId}`
+        .then(async (response: Photo[]) => {
+          var userId = "";
+          var userName = "";
+          var albumTitle = "";
+
+          if (response.length > 0) {
+            await fetch(
+              `https://jsonplaceholder.typicode.com/albums/${response[0].albumId}`
             )
               .then((response) => response.json())
               .then((data) => {
-                photo.albumTitle = data.title;
-
-                return fetch(
-                  `https://jsonplaceholder.typicode.com/users/${data.userId}`
-                );
-              })
-              .then((response) => response.json())
-              .then((data) => {
-                photo.authorName = data.name;
-                this.photos.push(photo);
+                albumTitle = data.title;
+                userId = data.userId;
               })
               .catch(() => {
-                this.error = true;
+                this.isError = true;
               });
+          }
+          if (userId !== "") {
+            await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+              .then((response) => response.json())
+              .then((data) => {
+                userName = data.name;
+              })
+              .catch(() => {
+                this.isError = true;
+              });
+          }
+
+          response.forEach((photo: Photo) => {
+            photo.albumTitle = albumTitle;
+            photo.authorName = userName;
+            this.photos.push(photo);
           });
         });
     },

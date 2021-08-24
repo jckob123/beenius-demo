@@ -50,18 +50,17 @@ export default defineComponent({
         }`
       )
         .then((response) => response.json())
-        .then((response: Album[]) => {
+        .then(async (response: Album[]) => {
           //api returns array, loop needed
-          response.forEach((album: Album) => {
-            this.getRandomPhotos(album.id).then((response: Photo[]) => {
-              album.thumbnailPhotos = response;
-              this.albums.push(album);
-            });
-          });
+          for (var data of response) {
+            const thumbnailPhotos = await this.getRandomPhotos(data.id);
+            data.thumbnailPhotos = thumbnailPhotos;
+            this.albums.push(data);
+          }
         })
         .catch(() => {
-          this.error = true;
-        })
+          this.isError = true;
+        });
     },
     getRandomPhotos(albumId: number): Promise<Photo[]> {
       var promise = fetch(
@@ -92,4 +91,5 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style>
+</style>
