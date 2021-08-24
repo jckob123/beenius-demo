@@ -9,7 +9,7 @@ app.use(router);
 
 //font awesome install
 app.component("font-awesome-icon", FontAwesomeIcon);
-app.component("the-error-message", TheErrorMessage)
+app.component("the-error-message", TheErrorMessage);
 //css
 require("./assets/global.css");
 //main mount

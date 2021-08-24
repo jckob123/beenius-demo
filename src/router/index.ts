@@ -20,7 +20,9 @@ function fetchUserData(albumId: any) {
     `https://jsonplaceholder.typicode.com/albums/${albumId}`
   )
     .then((response: any) => response.json())
-    .then((data: any) => { return data });
+    .then((data: any) => {
+      return data;
+    });
   return promise;
 }
 
@@ -29,12 +31,11 @@ async function setBreadCrumbs(to: any) {
     if (crumb.name == "Albums") {
       if (to.params.albumId !== undefined) {
         var album = await fetchUserData(to.params.albumId);
-        crumb.link = '/albums/' + album.userId;
+        crumb.link = "/albums/" + album.userId;
       }
     } else if (crumb.name == "Photos") {
       crumb.link = to.params.albumId;
     }
-
   }
 }
 

@@ -11,7 +11,4 @@ describe("AlbumCard.vue", () => {
   it("renders users full name", () => {
     expect(wrapper.get("span").text()).toMatch("Test");
   });
-
-
- 
 });

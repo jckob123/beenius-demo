@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="this.isError == false" class="content-container" >
+    <div v-if="this.isError == false" class="content-container">
       <user-card
         v-for="user in this.users"
         :key="user.id"

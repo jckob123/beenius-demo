@@ -26,7 +26,7 @@ export default defineComponent({
     userName: String,
     userFullName: String,
     randomPhotoUrl: String,
-    companyName: String
+    companyName: String,
   },
   methods: {
     selectUser(value: string) {
@@ -85,7 +85,7 @@ export default defineComponent({
   margin-top: 2.5rem;
 }
 .user-data span {
-  font-size:1rem;
+  font-size: 1rem;
 }
 .photo-container img {
   width: 100%;

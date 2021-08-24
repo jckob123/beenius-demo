@@ -1,5 +1,5 @@
 <template>
-  <div class="error" v-if="showError == true" >
+  <div class="error" v-if="showError == true">
     Error occured, please try again later
   </div>
 </template>
