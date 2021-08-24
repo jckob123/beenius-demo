@@ -6,8 +6,8 @@
   >
     <div class="user-data">
       <p class="user-name">{{ userFullName }}</p>
-      <p class="username">{{ userName }}</p>
-      <p>{{ companyName }}</p>
+      <p class="username">@{{ userName }}</p>
+      <p><span> company:</span> {{ companyName }}</p>
       <div class="photo-container">
         <img id="random-photo" :src="randomPhotoUrl" />
       </div>
@@ -84,7 +84,9 @@ export default defineComponent({
   width: 100%;
   margin-top: 2.5rem;
 }
-
+.user-data span {
+  font-size:1rem;
+}
 .photo-container img {
   width: 100%;
   height: 100%;
