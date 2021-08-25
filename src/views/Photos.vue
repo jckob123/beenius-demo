@@ -16,7 +16,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import PhotoCard from "@/components/PhotoCard.vue";
-import TheErrorMessage from "@/components/TheErrorMessage.vue";
 
 interface Photo {
   id: number;
@@ -32,7 +31,6 @@ export default defineComponent({
   name: "photos",
   components: {
     PhotoCard,
-    TheErrorMessage,
   },
   data: function () {
     return {

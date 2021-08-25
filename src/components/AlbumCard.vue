@@ -17,8 +17,8 @@
         {{ albumTitle }}
       </span>
     </div>
-    <div  v-if="this.numLoaded != 3" class="album-card-container">
-      <the-loader>Loading</the-loader>
+    <div v-if="this.numLoaded != 3" class="album-card-container">
+      <the-loader></the-loader>
     </div>
   </router-link>
 </template>
@@ -26,7 +26,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { store } from "@/store";
-import TheLoader from "@/components/TheLoader.vue";
 
 export default defineComponent({
   name: "album-card",
@@ -39,9 +38,6 @@ export default defineComponent({
       store: store,
       numLoaded: 0,
     };
-  },
-  components: {
-    TheLoader,
   },
   methods: {
     thumbnailPhotos() {

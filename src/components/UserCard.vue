@@ -22,7 +22,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { store } from "@/store";
-import TheLoader from "@/components/TheLoader.vue";
 
 export default defineComponent({
   name: "user-card",
@@ -47,9 +46,6 @@ export default defineComponent({
       isLoaded: false as Boolean,
       store: store,
     };
-  },
-  components: {
-    TheLoader,
   },
 });
 </script>

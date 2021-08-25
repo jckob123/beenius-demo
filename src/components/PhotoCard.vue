@@ -29,7 +29,7 @@
     </Teleport>
   </div>
   <div class="photo-card-container" v-if="this.isLoaded == false">
-    <the-loader ></the-loader>
+    <the-loader></the-loader>
   </div>
 </template>
 
@@ -37,7 +37,6 @@
 import { defineComponent } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import TheLoader from "@/components/TheLoader.vue";
 
 library.add(faTimes);
 
@@ -61,9 +60,6 @@ export default defineComponent({
     fullPhotoUrl: String,
     albumTitle: String,
     authorName: String,
-  },
-  components: {
-    TheLoader,
   },
 });
 </script>
