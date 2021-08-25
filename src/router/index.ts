@@ -61,11 +61,11 @@ function handleRoute(to: any, from: any, next: any) {
             });
         }
       }
-      //if params are empty and entry route is not users
     }
     //render
     next();
   } else {
+    //render
     next();
   }
 }

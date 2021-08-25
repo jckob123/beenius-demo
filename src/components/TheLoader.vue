@@ -2,8 +2,7 @@
   <font-awesome-icon class="fa-spin" icon="spinner" size="2x" />
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script lang="ts">
 import { library } from "@fortawesome/fontawesome-svg-core";
