@@ -1,4 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  RouteLocationNormalized,
+  NavigationGuardNext,
+} from "vue-router";
 import Users from "@/views/Users.vue";
 import Albums from "@/views/Albums.vue";
 import Photos from "@/views/Photos.vue";
@@ -8,14 +13,17 @@ function isEmptyObject(obj: {}) {
   return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
-function handleEmptyParams(to: any, next: any) {
+function handleEmptyParams(
+  to: RouteLocationNormalized,
+  next: NavigationGuardNext
+) {
   if (isEmptyObject(to.params) === true && to.name != "Users") {
     //redirect to /users
     next("/users");
   }
 }
 
-function fetchUserData(albumId: any) {
+function fetchAlbumData(albumId: number): Promise<any> {
   const promise = fetch(
     `https://jsonplaceholder.typicode.com/albums/${albumId}`
   )
@@ -26,46 +34,49 @@ function fetchUserData(albumId: any) {
   return promise;
 }
 
-async function setBreadCrumbs(to: any) {
+async function setBreadCrumbs(to: any): Promise<any> {
+  //loop for each crumb
   for (const crumb of to.meta.crumbs) {
+    //if crumb is albums
     if (crumb.name == "Albums") {
       if (to.params.albumId !== undefined) {
-        var album = await fetchUserData(to.params.albumId);
+        //fetch album data
+        var album = await fetchAlbumData(to.params.albumId);
+        //set link
         crumb.link = "/albums/" + album.userId;
       }
-    } else if (crumb.name == "Photos") {
+    }
+    //if crumbs is photos
+    if (crumb.name == "Photos") {
+
       crumb.link = to.params.albumId;
     }
   }
 }
 
-function handleRoute(to: any, from: any, next: any) {
+function setSidebarValues(
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: NavigationGuardNext
+) {
   //user refreshed, or on entry
   if (from.name == undefined) {
-    //params are not empty
-    if (isEmptyObject(to.params) === false) {
-      //if on album set selected user to param
-      if (to.name === "Albums") {
-        store.selectedUser = to.params.userId[0];
-      }
-      //if on photos, set selected album to param and fetch underlying user
-      if (to.name == "Photos") {
-        if (store.selectedUser == "") {
-          fetch(
-            "https://jsonplaceholder.typicode.com/albums/" + to.params.albumId
-          )
-            .then((response) => response.json())
-            .then((data: any) => {
-              store.selectedUser = data.userId;
-              store.selectedAlbum = to.params.albumId;
-            });
-        }
-      }
+    //if on album set selected user to param
+    if (to.name === "Albums") {
+      store.selectedUser = to.params.userId[0];
+    }
+    //if on photos, set selected album to param and fetch underlying user
+    if (to.name == "Photos") {
+      fetch(`https://jsonplaceholder.typicode.com/albums/${to.params.albumId}`)
+        .then((response) => response.json())
+        .then((data: any) => {
+          store.selectedUser = data.userId;
+          store.selectedAlbum = to.params.albumId;
+        });
     }
     //render
     next();
   } else {
-    //render
     next();
   }
 }
@@ -113,10 +124,10 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to: any, from: any, next) => {
+router.beforeEach(async (to, from: any, next) => {
   handleEmptyParams(to, next);
   await setBreadCrumbs(to);
-  handleRoute(to, from, next);
+  setSidebarValues(to, from, next);
 });
 
 export default router;
