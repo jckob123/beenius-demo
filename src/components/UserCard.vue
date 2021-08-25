@@ -1,5 +1,6 @@
 <template>
   <router-link
+    v-show="this.isLoaded == true"
     class="user-card-container"
     @click="selectUser(usersId)"
     :to="{ name: 'Albums', params: { userId: usersId } }"
@@ -9,15 +10,19 @@
       <p class="username">@{{ userName }}</p>
       <p><span> company:</span> {{ companyName }}</p>
       <div class="photo-container">
-        <img id="random-photo" :src="randomPhotoUrl" />
+        <img @load="loaded()" id="random-photo" :src="randomPhotoUrl" />
       </div>
     </div>
   </router-link>
+  <div class="user-card-container loading" v-if="this.isLoaded == false">
+    <the-loader></the-loader>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { store } from "@/store";
+import TheLoader from "@/components/TheLoader.vue";
 
 export default defineComponent({
   name: "user-card",
@@ -33,11 +38,18 @@ export default defineComponent({
       this.store.selectedUser = value;
       this.store.selectedAlbum = "";
     },
+    loaded() {
+      this.isLoaded = true;
+    },
   },
   data() {
     return {
+      isLoaded: false as Boolean,
       store: store,
     };
+  },
+  components: {
+    TheLoader,
   },
 });
 </script>
@@ -94,5 +106,9 @@ export default defineComponent({
 
 .user-data .user-name {
   font-weight: bold;
+}
+
+.loading {
+  height: 15rem;
 }
 </style>

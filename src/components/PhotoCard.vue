@@ -1,8 +1,9 @@
 <template>
-  <div class="photo-card-container">
+  <div class="photo-card-container" v-show="this.isLoaded == true">
     <img
       :src="thumbnailUrl"
       alt="thumbnailUrl"
+      @load="loaded()"
       @click="this.showPopup = true"
     />
     <span class="photo-title">{{ photoTitle }}</span>
@@ -27,12 +28,16 @@
       </transition>
     </Teleport>
   </div>
+  <div class="photo-card-container" v-if="this.isLoaded == false">
+    <the-loader ></the-loader>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import TheLoader from "@/components/TheLoader.vue";
 
 library.add(faTimes);
 
@@ -42,15 +47,23 @@ export default defineComponent({
     return {
       showPopup: false as Boolean,
       showDetailView: false as Boolean,
+      isLoaded: false as Boolean,
     };
   },
-  components: {},
+  methods: {
+    loaded() {
+      this.isLoaded = true;
+    },
+  },
   props: {
     thumbnailUrl: String,
     photoTitle: String,
     fullPhotoUrl: String,
     albumTitle: String,
     authorName: String,
+  },
+  components: {
+    TheLoader,
   },
 });
 </script>

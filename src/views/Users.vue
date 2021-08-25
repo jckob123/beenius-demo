@@ -76,12 +76,8 @@ export default defineComponent({
           */
           response.forEach((user: User) => {
             this.getRandomPhotoFromAlbum(user.id).then((result) => {
-              var img = new Image();
-              img.src = result;
-              img.onload = () => {
-                user.randomPhotoUrl = img.src;
-                this.users.push(user);
-              };
+              user.randomPhotoUrl = result;
+              this.users.push(user);
             });
           });
         });

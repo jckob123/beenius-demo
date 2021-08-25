@@ -4,18 +4,21 @@
     @click="selectAlbum(albumsId)"
     :to="{ name: 'Photos', params: { albumId: albumsId } }"
   >
-    <div class="album-card-container">
+    <div class="album-card-container" v-show="this.numLoaded == 3">
       <div class="photos-container">
         <img
           v-for="photo in this.thumbnailPhotos()"
           :key="photo.id"
           :src="photo.thumbnailUrl"
+          @load="loaded()"
         />
       </div>
-
       <span>
         {{ albumTitle }}
       </span>
+    </div>
+    <div  v-if="this.numLoaded != 3" class="album-card-container">
+      <the-loader>Loading</the-loader>
     </div>
   </router-link>
 </template>
@@ -23,6 +26,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { store } from "@/store";
+import TheLoader from "@/components/TheLoader.vue";
 
 export default defineComponent({
   name: "album-card",
@@ -33,7 +37,11 @@ export default defineComponent({
   data: function () {
     return {
       store: store,
+      numLoaded: 0,
     };
+  },
+  components: {
+    TheLoader,
   },
   methods: {
     thumbnailPhotos() {
@@ -41,6 +49,9 @@ export default defineComponent({
     },
     selectAlbum(value: string) {
       this.store.selectedAlbum = value;
+    },
+    loaded() {
+      this.numLoaded = this.numLoaded + 1;
     },
   },
 });
