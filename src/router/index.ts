@@ -1,6 +1,6 @@
 import {
   createRouter,
-  createWebHistory,
+  createWebHashHistory,
   RouteLocationNormalized,
   NavigationGuardNext,
 } from "vue-router";
@@ -19,7 +19,7 @@ function handleEmptyParams(
 ) {
   if (isEmptyObject(to.params) === true && to.name != "Users") {
     //redirect to /users
-    next("/users");
+    next("/#");
   }
 }
 
@@ -87,11 +87,11 @@ const routes = [
     redirect: "/users",
   },
   {
-    path: "/users",
+    path: "",
     name: "Users",
     component: Users,
     meta: {
-      crumbs: [{ name: "Users", link: "/users" }],
+      crumbs: [{ name: "Users", link: "/" }],
     },
   },
   {
@@ -100,7 +100,7 @@ const routes = [
     component: Albums,
     meta: {
       crumbs: [
-        { name: "Users", link: "/users" },
+        { name: "Users", link: "/" },
         { name: "Albums", link: "" },
       ],
     },
@@ -111,7 +111,7 @@ const routes = [
     component: Photos,
     meta: {
       crumbs: [
-        { name: "Users", link: "/users" },
+        { name: "Users", link: "/" },
         { name: "Albums", link: "" },
         { name: "Photos", link: "" },
       ],
@@ -120,7 +120,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 
