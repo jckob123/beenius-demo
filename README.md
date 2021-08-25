@@ -29,3 +29,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 I really enjoyed making this project and i hope it reaches your expectations.
 I learned alot of new concepts and generally had a great time doing it.
 Tests should have been done sooner and more thoroughly.
+
+## [live demo](https://flamboyant-aryabhata-710f0d.netlify.app).
