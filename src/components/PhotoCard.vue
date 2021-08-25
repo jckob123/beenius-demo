@@ -149,7 +149,7 @@ export default defineComponent({
 
 @media only screen and (min-width: 600px) {
   .detail-view {
-    width: 30%;
+    width: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
