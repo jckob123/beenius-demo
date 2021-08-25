@@ -57,7 +57,7 @@ export default defineComponent({
   flex-flow: column;
   justify-content: center;
   width: 15rem;
-  margin: 6rem 1rem 1rem 1rem;
+  margin: 5rem 1rem 1rem 1rem;
   align-items: center;
   padding: 8px;
   -webkit-box-shadow: 0px 0px 21px -2px rgba(0, 0, 0, 0.1);

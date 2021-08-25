@@ -61,7 +61,7 @@ export default defineComponent({
   justify-content: center;
   width: 15rem;
   height: 10rem;
-  margin: 6rem 1rem 1rem 1rem;
+  margin: 5rem 1rem 1rem 1rem;
   align-items: center;
   padding: 8px;
   -webkit-box-shadow: 0px 0px 21px -2px rgba(0, 0, 0, 0.1);
