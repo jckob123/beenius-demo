@@ -23,8 +23,10 @@ export default {
   },
   methods: {
     crumbLink(name: String) {
-      if (name === "Albums" && store.selectedUser != undefined) return `/albums/${store.selectedUser}`;
-      if (name === "Photos" && store.selectedAlbum != undefined) return `/photos/${store.selectedAlbum}`;
+      if (name === "Albums" && store.selectedUser != undefined)
+        return `/albums/${store.selectedUser}`;
+      if (name === "Photos" && store.selectedAlbum != undefined)
+        return `/photos/${store.selectedAlbum}`;
       return "/";
     },
   },
