@@ -23,7 +23,7 @@ function handleEmptyParams(
   }
 }
 
-function setSidebarValues(
+function setStore(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext
@@ -95,7 +95,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from: any, next) => {
   handleEmptyParams(to, next);
-  setSidebarValues(to, from, next);
+  setStore(to, from, next);
 });
 
 export default router;
