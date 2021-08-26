@@ -60,7 +60,7 @@ const routes = [
     name: "Users",
     component: Users,
     meta: {
-      crumbs: [{ name: "Users", link: "/" }],
+      crumbs: [{ name: "Users" }],
     },
   },
   {
@@ -68,10 +68,7 @@ const routes = [
     name: "Albums",
     component: Albums,
     meta: {
-      crumbs: [
-        { name: "Users", link: "/" },
-        { name: "Albums", link: "" },
-      ],
+      crumbs: [{ name: "Users" }, { name: "Albums" }],
     },
   },
   {
@@ -79,11 +76,7 @@ const routes = [
     name: "Photos",
     component: Photos,
     meta: {
-      crumbs: [
-        { name: "Users", link: "/" },
-        { name: "Albums", link: "" },
-        { name: "Photos", link: "" },
-      ],
+      crumbs: [{ name: "Users" }, { name: "Albums" }, { name: "Photos" }],
     },
   },
 ];

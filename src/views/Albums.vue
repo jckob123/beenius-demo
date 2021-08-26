@@ -43,11 +43,8 @@ export default defineComponent({
   },
   methods: {
     async getAlbums() {
-      let id_param = this.$route.params.userId;
       fetch(
-        `https://jsonplaceholder.typicode.com/albums/${
-          id_param === undefined ? "" : "?userId=" + id_param
-        }`
+        `https://jsonplaceholder.typicode.com/albums/?userId=${this.$route.params.userId}`
       )
         .then((response) => response.json())
         .then(async (response: Album[]) => {
