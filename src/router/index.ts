@@ -23,37 +23,6 @@ function handleEmptyParams(
   }
 }
 
-function fetchAlbumData(albumId: number): Promise<any> {
-  const promise = fetch(
-    `https://jsonplaceholder.typicode.com/albums/${albumId}`
-  )
-    .then((response: any) => response.json())
-    .then((data: any) => {
-      return data;
-    });
-  return promise;
-}
-
-async function setBreadCrumbs(to: any): Promise<any> {
-  //loop for each crumb
-  for (const crumb of to.meta.crumbs) {
-    //if crumb is albums
-    if (crumb.name == "Albums") {
-      if (to.params.albumId !== undefined) {
-        //fetch album data
-        var album = await fetchAlbumData(to.params.albumId);
-        //set link
-        crumb.link = "/albums/" + album.userId;
-      }
-    }
-    //if crumbs is photos
-    if (crumb.name == "Photos") {
-
-      crumb.link = to.params.albumId;
-    }
-  }
-}
-
 function setSidebarValues(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
@@ -126,7 +95,6 @@ const router = createRouter({
 
 router.beforeEach(async (to, from: any, next) => {
   handleEmptyParams(to, next);
-  await setBreadCrumbs(to);
   setSidebarValues(to, from, next);
 });
 
